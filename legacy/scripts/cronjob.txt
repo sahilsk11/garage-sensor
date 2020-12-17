@@ -1,0 +1,2 @@
+*/15 * * * * cd /home/pi/GDS/scripts; ./monitor.py > /tmp/cron_monitor.out 2>&1
+0 1 * * * cd /home/pi/GDS; git pull > /tmp/cron_gitpull.out 2>&1

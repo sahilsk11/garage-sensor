@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Restricted Content"
+AuthUserFile /home/pi/GDS/.htpasswd
+Require valid-user
