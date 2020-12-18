@@ -39,5 +39,6 @@ def is_door_open(door_threhold=30):
   """
   Get measurement from the sensor. Use the value to determine if door is open or not
   """
+  #note: should check if dist > X to check for spiders/cobwebs on sensor
   dist = get_distance()
   return dist < door_threhold
