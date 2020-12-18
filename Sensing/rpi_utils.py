@@ -4,6 +4,7 @@ import time
 
 class Relay:
     def __init__(self, trig_pin=24, on_level='HIGH', gpio_mode=None, gpio_warnings=None):
+        GPIO.setmode(GPIO.BCM)
         self.trig_pin = trig_pin
         self.on_level = on_level
 
@@ -39,6 +40,7 @@ class Relay:
 # Code based on https://electrosome.com/hc-sr04-ultrasonic-sensor-raspberry-pi/
 class DistanceMeasurer:
     def __init__(self, trig_pin=15, echo_pin=18, settle_time=1, range_min=2, range_max=500, gpio_mode=None, gpio_warnings=None):
+        GPIO.setmode(GPIO.BCM)
         self.trig_pin = trig_pin
         self.echo_pin = echo_pin
         self.settle_time = settle_time
@@ -207,3 +209,58 @@ class RGBled:
        
         except KeyboardInterrupt:  
             pass  
+
+
+##############################################################################################################
+
+if __name__ == "__main__":
+    GPIO.setmode(GPIO.BCM)
+    
+#     trig_pin = 15                                       #Associate pin 18 to trig_pin
+#     echo_pin = 18                                       #Associate pin 23 to echo_pin
+#     dm = DistanceMeasurer(trig_pin, echo_pin)
+#     print "Distance measurement in progress"
+#     while True:
+#         try:
+#             dist = dm.get_dist()
+#             print 'Distance is %f' % dist
+#         except RuntimeError, e:
+#             print 'ERROR: %s' % e
+#         except KeyboardInterrupt:
+#             GPIO.cleanup()   
+# 	    exit(0)
+
+    led = RGBled(23, 25, 7)
+    led.color_red()
+    time.sleep(1)
+    led.color_blue()
+    time.sleep(1)
+    led.color_green()
+    time.sleep(1)
+    led.off()
+    #led.start_pwm()
+    #led.change_colors(50, 5, 5)
+    #time.sleep(2)
+    #led.cycle_colors()
+    #time.sleep(2)
+#    
+#    for i in range(3):
+#        led.cycle_colors(delay=0.01)
+#
+#    print "Sin Wave"
+#    led.change_colors_sin()
+
+
+    relay = Relay(24)
+    print "on"
+    relay.on()
+    time.sleep(2)
+    print "off"
+    relay.off()
+    time.sleep(2)
+    GPIO.cleanup()
+         
+        
+
+
+    
