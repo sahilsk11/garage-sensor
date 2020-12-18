@@ -1,5 +1,5 @@
 import flask
-from control import open_door, close_door, toggle_door, is_door_open
+from Sensing.control import open_door, close_door, toggle_door, is_door_open
 
 app = flask.Flask(__name__)
 
