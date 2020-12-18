@@ -1,6 +1,8 @@
 import flask
-from Sensing.control import open_door, close_door, toggle_door, is_door_open
 import datetime
+import sys
+sys.path.append("../")
+from control import open_door, close_door, toggle_door, is_door_open
 
 app = flask.Flask(__name__)
 
@@ -39,7 +41,7 @@ def update_state(method=None, is_open=None):
     open_state = None
 
   current_time = datetime.datetime.now()
-  
+
 
 if __name__ == "__main__":
   app.run()
