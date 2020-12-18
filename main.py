@@ -10,3 +10,5 @@ def run():
   elif door_open_at_night():
     alert_users("Garage door has been opened at night.")
     
+if __name__ == "__main__":
+  run()
