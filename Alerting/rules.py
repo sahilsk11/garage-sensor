@@ -1,5 +1,8 @@
 import datetime
 import json
+import sys
+sys.path.append("../")
+from Sensing.control import is_door_open
 
 def door_left_open(time_threshold=15):
   """
