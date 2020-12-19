@@ -1,7 +1,7 @@
 import flask
 import datetime
 import sys
-sys.path.append("./Sensing")
+sys.path.append("/home/pi/garage-sensor/Sensing")
 from control import open_door, close_door, toggle_door, is_door_open
 
 app = flask.Flask(__name__)
@@ -10,22 +10,25 @@ app = flask.Flask(__name__)
 def open_door_route():
   open_door()
   update_state(is_open=True)
+  return flask.jsonify({"success": True})
 
 @app.route("/closeDoor")
 def close_door_route():
   close_door()
   update_state(is_open=False)
+  return flask.jsonify({"success": True})
 
 @app.route("/toggle")
 def toggle_route():
   toggle_door()
   update_state(method="toggle")
+  return flask.jsonify({"success": True})
 
 @app.route("/doorStatus")
 def door_status_route():
   is_open = is_door_open()
   update_state(is_open=is_open)
-  return {"doorOpen": is_open}
+  return flask.jsonify({"doorOpen": is_open})
 
 def update_state(method=None, is_open=None):
   """
