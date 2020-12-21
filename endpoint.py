@@ -13,7 +13,7 @@ def open_door_route():
   if authenticate(flask.request.json):
     state_changed = open_door()
     update_state(is_open=True)
-    return flask.jsonify({"success": True, "state_chaged": state_changed})
+    return flask.jsonify({"success": True, "state_changed": state_changed})
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 
