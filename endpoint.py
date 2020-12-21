@@ -8,7 +8,7 @@ from control import open_door, close_door, toggle_door, is_door_open
 app = flask.Flask(__name__)
 
 
-@app.route("/openDoor", methods=['GET', 'POST'])
+@app.route("/openDoor", methods=['POST'])
 def open_door_route():
   if authenticate(flask.request.json):
     state_changed = open_door()
@@ -17,7 +17,7 @@ def open_door_route():
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 
-@app.route("/closeDoor", methods=['GET', 'POST'])
+@app.route("/closeDoor", methods=['POST'])
 def close_door_route():
   if authenticate(flask.request.json):
     state_changed = close_door()
@@ -26,7 +26,7 @@ def close_door_route():
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 
-@app.route("/toggle", methods=['GET', 'POST'])
+@app.route("/toggle", methods=['POST'])
 def toggle_route():
   if authenticate(flask.request.json):
     toggle_door()
@@ -34,7 +34,7 @@ def toggle_route():
     return flask.jsonify({"success": True})
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
-@app.route("/doorStatus", methods=['GET', 'POST'])
+@app.route("/doorStatus", methods=['POST'])
 def door_status_route():
   if authenticate(flask.request.json):
     is_open = is_door_open()
