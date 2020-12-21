@@ -43,6 +43,8 @@ def door_status_route():
   return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 def authenticate(data):
+  if "apiKey" not in data.keys():
+    return False
   return data["apiKey"] == passwords.garage_key()
 
 def update_state(method=None, is_open=None):
