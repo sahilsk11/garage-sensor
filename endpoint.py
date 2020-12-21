@@ -3,7 +3,7 @@ import datetime
 import sys
 import passwords
 sys.path.append("/home/pi/garage-sensor/Sensing")
-#from control import open_door, close_door, toggle_door, is_door_open
+from control import open_door, close_door, toggle_door, is_door_open
 
 app = flask.Flask(__name__)
 
