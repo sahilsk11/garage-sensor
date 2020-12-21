@@ -1,6 +1,7 @@
 import json
 import datetime
 import requests
+import passwords
 
 """
 Send messages to recipients
@@ -24,6 +25,14 @@ def send_text(number, message):
   Send a text to this number using Textbelt
   Use Ultron hook to handle recipient replies
   """
+  textbelt_key = passwords.textbelt_key()
+  r = requests.post("https://textbelt.com/text", data={
+    "phone": number,
+    "message": message,
+    "key": textbelt_key,
+    "replyWebhook": "https://www.ultron.sh/server/handleSmsReply"
+  })
+  print(r.json())
   return
 
 def alert_users(message):
@@ -35,3 +44,7 @@ def alert_users(message):
     numbers = load_numbers()
     for number in numbers:
       send_text(number, message)
+
+
+if __name__ == "__main__":
+  send_text("+14088870804", "try again")

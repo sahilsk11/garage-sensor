@@ -12,13 +12,18 @@ def open_door():
   """
   if not is_door_open():
     toggle_door()
+    return True
+  return False
 
 def close_door():
   """
   Closes the garage door. Does nothing if door is closed
+  Return True if action taken (door was open), False is door was closed
   """
   if is_door_open():
     toggle_door()
+    return True
+  return False
 
 def toggle_door():
   """

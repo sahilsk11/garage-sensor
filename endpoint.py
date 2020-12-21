@@ -1,6 +1,7 @@
 import flask
 import datetime
 import sys
+import passwords
 sys.path.append("/home/pi/garage-sensor/Sensing")
 from control import open_door, close_door, toggle_door, is_door_open
 
@@ -8,27 +9,38 @@ app = flask.Flask(__name__)
 
 @app.route("/openDoor")
 def open_door_route():
-  open_door()
-  update_state(is_open=True)
-  return flask.jsonify({"success": True})
+  if authenticate(flask.request.json):
+    state_changed = open_door()
+    update_state(is_open=True)
+    return flask.jsonify({"success": True, "state_chaged": state_changed})
+  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 @app.route("/closeDoor")
 def close_door_route():
-  close_door()
-  update_state(is_open=False)
-  return flask.jsonify({"success": True})
+  if authenticate(flask.request.json):
+    state_changed = close_door()
+    update_state(is_open=False)
+    return flask.jsonify({"success": True, "state_changed": state_changed})
+  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 @app.route("/toggle")
 def toggle_route():
-  toggle_door()
-  update_state(method="toggle")
-  return flask.jsonify({"success": True})
+  if authenticate(flask.request.json):
+    toggle_door()
+    update_state(method="toggle")
+    return flask.jsonify({"success": True})
+  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
 
 @app.route("/doorStatus")
 def door_status_route():
-  is_open = is_door_open()
-  update_state(is_open=is_open)
-  return flask.jsonify({"doorOpen": is_open})
+  if authenticate(flask.request.json):
+    is_open = is_door_open()
+    update_state(is_open=is_open)
+    return flask.jsonify({"doorOpen": is_open})
+  return flask.jsonify({"code": 403, "message": "Invalid credentials"})
+
+def authenticate(data):
+  return data["apiKey"] == passwords.garage_key()
 
 def update_state(method=None, is_open=None):
   """
